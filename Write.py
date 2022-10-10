@@ -1,4 +1,5 @@
 import sys
+import drivers
 from mfrc522 import SimpleMFRC522
 from time import sleep
 import RPi.GPIO as GPIO
@@ -13,8 +14,14 @@ GPIO.setmode(GPIO.BCM)
 buzzer = 4
 GPIO.setup(buzzer,GPIO.OUT)
 
+#Set up LCD screen for display use
+display = drivers.Lcd()
+display.lcd_clear()
+
+
 reader = SimpleMFRC522()
 try:
+        display.lcd_display_string("Enter your name:", 1)  # Write line of text to first line of display
         text = input('New Data:')
         GPIO.output(buzzer,GPIO.HIGH)
         sleep(0.1)
@@ -23,12 +30,19 @@ try:
         GPIO.output(buzzer,GPIO.HIGH)
         sleep(0.1)
         GPIO.output(buzzer,GPIO.LOW)
-        print("Now place your tag to write...")
+        display.lcd_clear()
+        display.lcd_display_string("Now scan the", 1)  # Write line of text to first line of display
+        display.lcd_display_string("card to write:", 2)  # Write line of text to first line of display
+        print("Now place your card/tag to write...")
         reader.write(text)
         GPIO.output(buzzer,GPIO.HIGH)
         sleep(0.5)
         GPIO.output(buzzer,GPIO.LOW)
-        print("Written")
+        print("Info has been written")
+        display.lcd_clear()
+        display.lcd_display_string("Info has been", 1)  # Write line of text to first line of display
+        display.lcd_display_string("written to card!:", 2)  # Write line of text to first line of display
+
 finally:
         GPIO.cleanup() 
 
