@@ -21,8 +21,8 @@ display.lcd_clear()
 
 reader = SimpleMFRC522()
 try:
-        display.lcd_display_string("Enter your name:", 1)  # Write line of text to first line of display
-        text = input('New Data:')
+        display.lcd_display_string("Enter DUO username:", 1)  # Write line of text to first line of display
+        text = input('Enter your DUO username:')
         GPIO.output(buzzer,GPIO.HIGH)
         sleep(0.1)
         GPIO.output(buzzer,GPIO.LOW)
@@ -39,9 +39,11 @@ try:
         sleep(0.5)
         GPIO.output(buzzer,GPIO.LOW)
         print("Info has been written")
-        display.lcd_clear()
+        display.lcd_clear();
         display.lcd_display_string("Info has been", 1)  # Write line of text to first line of display
         display.lcd_display_string("written to card!:", 2)  # Write line of text to first line of display
+        sleep(3);
+        display.lcd_clear();
 
 finally:
         GPIO.cleanup() 
