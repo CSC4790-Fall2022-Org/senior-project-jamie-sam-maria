@@ -54,8 +54,6 @@ def duo_auth(user):
 	# Retrieve user info from API:
 	if preauth_result['result']=='auth':
 		auth_result = auth_api.auth(username=user,factor='push',device='auto')
-	
-	# Code goes here for creating a new account w/ a blank card #
 
 	print('Authentication Results :'+ json.dumps(auth_result))
 	
@@ -84,8 +82,8 @@ if __name__ == '__main__':
 			GPIO.output(buzzer,GPIO.HIGH)
 			sleep(0.5)
 			GPIO.output(buzzer,GPIO.LOW)
-			print(id)
-			print(user)
+			print("ID Number:", id)
+			print("Username:", user)
 			status = duo_auth(user)
 			if status == "allow":
 				print('Login Authorized!')
@@ -93,7 +91,7 @@ if __name__ == '__main__':
 				display.lcd_display_string("Login", 1);
 				display.lcd_display_string("Authorized!", 2);
 			elif status=="deny":
-				print('Log-in Denied!')
+				print('Login Denied!')
 				display.lcd_clear();
 				display.lcd_display_string("Login", 1);
 				display.lcd_display_string("Denied!", 2);
